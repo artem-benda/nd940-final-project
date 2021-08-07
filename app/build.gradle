@@ -18,6 +18,9 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("String", "API_KEY", "\"DEMO_KEY\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.nasa.gov/mars-photos/api/v1/\"")
+
         multiDexEnabled = true
     }
 
@@ -34,6 +37,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+
 }
 
 dependencies {
@@ -72,8 +77,14 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
 
 
-    // Retrofit - Deprecated plugins - No more required
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:$version_retrofit") {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_okhttp"
 
     // Retrofit with Moshi Converter
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
@@ -83,6 +94,9 @@ dependencies {
 
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
 }
 
 kapt {

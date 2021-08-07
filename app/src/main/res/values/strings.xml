@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Mars Explorer</string>
+    <string name="FHAZ">Front Hazard Avoidance Camera</string>
+    <string name="RHAZ">Rear Hazard Avoidance Camera</string>
+    <string name="MAST">Mast Camera</string>
+    <string name="CHEMCAM">Chemistry and Camera Complex</string>
+    <string name="MAHLI">Mars Hand Lens Imager</string>
+    <string name="MARDI">Mars Descent Imager</string>
+    <string name="NAVCAM">Navigation Camera</string>
+    <string name="PANCAM">Panoramic Camera</string>
+    <string name="MINITES">Miniature Thermal Emission Spectrometer (Mini-TES)</string>
+    <string name="all_cameras">All cameras</string>
 </resources>
