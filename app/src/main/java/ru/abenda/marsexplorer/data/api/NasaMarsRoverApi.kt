@@ -6,8 +6,8 @@ import retrofit2.http.Query
 import ru.abenda.marsexplorer.BuildConfig
 import ru.abenda.marsexplorer.data.api.dto.FindPhotosByDateResponse
 import ru.abenda.marsexplorer.data.api.dto.GetRoverMissionManifestResponse
-import ru.abenda.marsexplorer.data.api.enums.CameraType
-import ru.abenda.marsexplorer.data.api.enums.RoverType
+import ru.abenda.marsexplorer.data.enums.CameraType
+import ru.abenda.marsexplorer.data.enums.RoverType
 
 interface NasaMarsRoverApi {
 

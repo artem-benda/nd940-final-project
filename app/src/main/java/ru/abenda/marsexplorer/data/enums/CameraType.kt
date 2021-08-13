@@ -1,4 +1,4 @@
-package ru.abenda.marsexplorer.data.api.enums
+package ru.abenda.marsexplorer.data.enums
 
 import androidx.annotation.StringRes
 import ru.abenda.marsexplorer.R

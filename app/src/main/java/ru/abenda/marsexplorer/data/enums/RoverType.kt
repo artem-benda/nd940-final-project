@@ -1,4 +1,4 @@
-package ru.abenda.marsexplorer.data.api.enums
+package ru.abenda.marsexplorer.data.enums
 
 enum class RoverType private constructor(val cameraTypes: Set<CameraType>) {
     Curiosity(

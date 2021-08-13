@@ -1,7 +1,7 @@
 package ru.abenda.marsexplorer.data.api.dto
 
 import com.squareup.moshi.Json
-import ru.abenda.marsexplorer.data.api.enums.CameraType
+import ru.abenda.marsexplorer.data.enums.CameraType
 
 data class PhotosStatsBySolDto(
     val sol: Int,

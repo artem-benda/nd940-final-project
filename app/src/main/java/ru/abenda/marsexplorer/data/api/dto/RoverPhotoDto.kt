@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import java.time.LocalDate
 
 data class RoverPhotoDto(
-    val id: Int,
+    val id: Long,
     val sol: Int,
     val camera: CameraDto,
     @Json(name = "img_src") val imageSrc: String,
