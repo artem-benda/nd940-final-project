@@ -7,7 +7,6 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import retrofit2.HttpException
 import ru.abenda.marsexplorer.data.api.NasaMarsRoverApi
-import ru.abenda.marsexplorer.data.api.dto.RoverPhotoDto
 import ru.abenda.marsexplorer.data.enums.CameraType
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.data.db.AppDatabase
@@ -16,19 +15,19 @@ import ru.abenda.marsexplorer.data.db.model.RoverPhoto
 import java.io.IOException
 
 @ExperimentalPagingApi
-class MarsPhotosMediator(
+class RoverPhotosMediator(
     private val api: NasaMarsRoverApi,
+    private val db: AppDatabase,
     private val roverType: RoverType,
     private val cameraType: CameraType,
-    private val sol: Int,
-    private val db: AppDatabase
-) : RemoteMediator<Int, RoverPhotoDto>() {
+    private val sol: Int
+) : RemoteMediator<Int, RoverPhoto>() {
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, RoverPhotoDto>): MediatorResult {
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, RoverPhoto>): MediatorResult {
 
         val page = when (loadType) {
             LoadType.REFRESH -> {
@@ -69,7 +68,7 @@ class MarsPhotosMediator(
                     RemoteKey(photoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 val photoModels = photos.map {
-                    RoverPhoto(it.id, it.sol, it.camera, it.imageSrc, it.earthDate, it.rover)
+                    RoverPhoto(it.id, it.sol, cameraType, it.imageSrc, it.earthDate, roverType)
                 }
                 db.remoteKeysDao().insertAll(keyModels)
                 db.roverPhotosDao().insertAll(photoModels)
@@ -82,14 +81,14 @@ class MarsPhotosMediator(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, RoverPhotoDto>): RemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, RoverPhoto>): RemoteKey? {
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { photo ->
                 db.remoteKeysDao().remoteKeysPhotoId(photo.id)
             }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, RoverPhotoDto>): RemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, RoverPhoto>): RemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { photo ->
                 db.remoteKeysDao().remoteKeysPhotoId(photo.id)
@@ -97,7 +96,7 @@ class MarsPhotosMediator(
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, RoverPhotoDto>
+        state: PagingState<Int, RoverPhoto>
     ): RemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { photoId ->
