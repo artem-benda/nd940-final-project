@@ -1,15 +1,14 @@
 package ru.abenda.marsexplorer.data.api.dto
 
 import com.squareup.moshi.Json
-import java.time.LocalDate
 
 data class RoverManifestDto(
     val name: String,
-    @Json(name = "landing_date") val landingDate: LocalDate,
-    @Json(name = "launch_date") val launchDate: LocalDate,
+    @Json(name = "landing_date") val landingDate: String,
+    @Json(name = "launch_date") val launchDate: String,
     val status: String,
     @Json(name = "max_sol") val maxSol: Int?,
-    @Json(name = "max_date") val maxDate: LocalDate,
+    @Json(name = "max_date") val maxDate: String,
     @Json(name = "total_photos") val totalPhotos: Int,
     val photos: List<PhotosStatsBySolDto>
 )

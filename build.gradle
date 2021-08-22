@@ -22,6 +22,7 @@ buildscript {
         version_espresso = "3.4.0"
         version_paging = "3.0.1"
         version_room = "2.3.0"
+        version_timber = "5.0.1"
     }
     repositories {
         google()

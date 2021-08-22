@@ -32,7 +32,7 @@ class RoverPhotosMediator(
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKey = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKey?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
+                remoteKey?.nextKey?.minus(1) ?: 1
             }
             LoadType.PREPEND -> {
                 val remoteKey = getRemoteKeyForFirstItem(state)
@@ -62,7 +62,7 @@ class RoverPhotosMediator(
                     db.remoteKeysDao().clear()
                     db.roverPhotosDao().clear()
                 }
-                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
+                val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keyModels = photos.map {
                     RemoteKey(photoId = it.id, prevKey = prevKey, nextKey = nextKey)

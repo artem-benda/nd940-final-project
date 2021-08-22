@@ -16,10 +16,10 @@ interface RoverPhotosDao {
 
     @Query(
         "SELECT * FROM rover_photos WHERE " +
-            "rover_type = :rover_type AND " +
+            "rover_type = :roverType AND " +
             "camera_type = :cameraType AND " +
             "sol = :sol " +
-            "ORDER BY id DESC, name ASC"
+            "ORDER BY id DESC"
     )
     fun findPhotos(roverType: RoverType, cameraType: CameraType, sol: Int): PagingSource<Int, RoverPhoto>
 

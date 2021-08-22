@@ -12,7 +12,9 @@ import ru.abenda.marsexplorer.data.enums.CameraType
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.data.paging.RoverPhotosMediator
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RoverPhotosRepository @Inject constructor(
     private val api: NasaMarsRoverApi,
     private val db: AppDatabase

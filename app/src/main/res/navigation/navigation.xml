@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/photosFragment">
+    app:startDestination="@id/curiosityOverviewFragment">
 
     <fragment
         android:id="@+id/photosFragment"
@@ -18,11 +18,29 @@
         android:id="@+id/photoFragment"
         android:name="ru.abenda.marsexplorer.ui.photo.PhotoFragment"
         android:label="photo_fragment"
-        tools:layout="@layout/photo_fragment" >
+        tools:layout="@layout/photo_fragment" />
+    <fragment
+        android:id="@+id/curiosityOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.CuriosityOverviewFragment"
+        android:label="@string/app_name">
         <action
-            android:id="@+id/action_photoFragment_to_photosFragment"
-            app:destination="@id/photosFragment"
-            app:popUpTo="@id/photosFragment"
-            app:popUpToInclusive="false" />
+            android:id="@+id/action_curiosityOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/opportunityOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.OpportunityOverviewFragment"
+        android:label="@string/opportunity">
+        <action
+            android:id="@+id/action_opportunityOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spiritOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.SpiritOverviewFragment"
+        android:label="@string/spirit">
+        <action
+            android:id="@+id/action_spiritOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
     </fragment>
 </navigation>

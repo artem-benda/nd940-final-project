@@ -1,13 +1,15 @@
 package ru.abenda.marsexplorer.ui.photo
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import ru.abenda.marsexplorer.R
 
+@AndroidEntryPoint
 class PhotoFragment : Fragment() {
 
     companion object {
@@ -17,7 +19,8 @@ class PhotoFragment : Fragment() {
     private lateinit var viewModel: PhotoViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.photo_fragment, container, false)
@@ -28,5 +31,4 @@ class PhotoFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(PhotoViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }

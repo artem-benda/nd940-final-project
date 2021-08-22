@@ -22,4 +22,7 @@
     <string name="curiosity">Curiosity</string>
     <string name="opportunity">Opportunity</string>
     <string name="spirit">Spirit</string>
+    <string name="action_try_again">Try again...</string>
+    <string name="error_network_call">Error executing request</string>
+    <string name="OTHER">Other Camera</string>
 </resources>

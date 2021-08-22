@@ -115,10 +115,13 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
-    annotationProcessor "androidx.room:room-compiler:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
     testImplementation "androidx.room:room-testing:$version_room"
     // Room Paging 3 Integration (only in 2.4.x)
     implementation "androidx.room:room-paging:2.4.0-alpha04"
+
+    // Timber logging
+    implementation "com.jakewharton.timber:timber:$version_timber"
 }
 
 kapt {

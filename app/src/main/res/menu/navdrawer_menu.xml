@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/curiosity"
+        android:id="@+id/curiosityOverviewFragment"
         android:title="@string/curiosity" />
 
     <item
-        android:id="@+id/opportunity"
+        android:id="@+id/opportunityOverviewFragment"
         android:title="@string/opportunity" />
 
     <item
-        android:id="@+id/spirit"
+        android:id="@+id/spiritOverviewFragment"
         android:title="@string/spirit" />
 </menu>
