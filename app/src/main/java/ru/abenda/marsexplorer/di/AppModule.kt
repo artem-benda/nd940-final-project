@@ -2,6 +2,7 @@ package ru.abenda.marsexplorer.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -16,6 +17,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.abenda.marsexplorer.BuildConfig
 import ru.abenda.marsexplorer.data.api.NasaMarsRoverApi
 import ru.abenda.marsexplorer.data.db.AppDatabase
+import timber.log.Timber
+import java.util.concurrent.Executors
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -68,6 +71,12 @@ class AppModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase =
         Room.databaseBuilder(appContext, AppDatabase::class.java, "rover")
+            .setQueryCallback(
+                RoomDatabase.QueryCallback { sqlQuery, bindArgs ->
+                    Timber.i("SQL Query: $sqlQuery SQL Args: $bindArgs")
+                },
+                Executors.newSingleThreadExecutor()
+            )
             .fallbackToDestructiveMigration()
             .build()
 }

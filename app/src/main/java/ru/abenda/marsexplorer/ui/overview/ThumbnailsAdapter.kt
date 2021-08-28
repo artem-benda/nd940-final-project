@@ -5,26 +5,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.abenda.marsexplorer.data.db.model.RoverPhoto
+import ru.abenda.marsexplorer.data.db.model.PhotosStatsBySolThumbnail
 import ru.abenda.marsexplorer.databinding.ListItemThumbnailBinding
 
 class ThumbnailsAdapter :
-    ListAdapter<RoverPhoto, ThumbnailsAdapter.ThumbnailListViewHolder>(DiffCallback) {
+    ListAdapter<PhotosStatsBySolThumbnail, ThumbnailsAdapter.ThumbnailListViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<RoverPhoto>() {
-        override fun areItemsTheSame(oldItem: RoverPhoto, newItem: RoverPhoto): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<PhotosStatsBySolThumbnail>() {
+        override fun areItemsTheSame(oldItem: PhotosStatsBySolThumbnail, newItem: PhotosStatsBySolThumbnail): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: RoverPhoto, newItem: RoverPhoto): Boolean {
+        override fun areContentsTheSame(oldItem: PhotosStatsBySolThumbnail, newItem: PhotosStatsBySolThumbnail): Boolean {
             return oldItem == newItem
         }
     }
 
     class ThumbnailListViewHolder(private var binding: ListItemThumbnailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(roverPhoto: RoverPhoto) {
-            binding.roverPhoto = roverPhoto
+        fun bind(thumbnail: PhotosStatsBySolThumbnail) {
+            binding.thumbnail = thumbnail
             binding.executePendingBindings()
         }
 

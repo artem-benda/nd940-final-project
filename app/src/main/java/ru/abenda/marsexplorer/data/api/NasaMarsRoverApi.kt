@@ -15,8 +15,8 @@ interface NasaMarsRoverApi {
     suspend fun findPhotosBySol(
         @Path("rover") rover: RoverType,
         @Query("sol") sol: Int,
-        @Query("camera") camera: CameraType,
         @Query("page") page: Int,
+        @Query("camera") camera: CameraType? = null,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY
     ): FindPhotosByDateResponse
 

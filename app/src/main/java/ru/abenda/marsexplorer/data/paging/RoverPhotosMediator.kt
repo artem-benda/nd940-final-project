@@ -53,7 +53,7 @@ class RoverPhotosMediator(
         }
 
         try {
-            val apiResponse = api.findPhotosBySol(roverType, sol, cameraType, page)
+            val apiResponse = api.findPhotosBySol(roverType, sol, page, cameraType)
 
             val photos = apiResponse.photos
             val endOfPaginationReached = photos.isEmpty()

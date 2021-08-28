@@ -33,18 +33,27 @@ abstract class OverviewFragment(
         viewModel.setRoverType(roverType)
 
         val binding = FragmentOverviewBinding.inflate(layoutInflater, container, false)
+        binding.lifecycleOwner = this
 
         val adapter = OverviewListAdapter(
-            OverviewClickListener {
-                findNavController().navigate(clickNavDirection)
-            }
+            OverviewListItemListener(
+                {
+                    findNavController().navigate(clickNavDirection)
+                },
+                {
+                    viewModel.launchLoadThumbnails(it.photosStatsBySol.roverType, it.photosStatsBySol.sol)
+                }
+            )
         )
+        binding.overviewList.adapter = adapter
 
-        viewModel.photosStatsBySol.observe(
+        viewModel.manifest.observe(
             viewLifecycleOwner,
             Observer {
-                Timber.d("photosStatsBySol, observed value: %s", it)
-                adapter.submitList(it)
+                Timber.d("manifest, observed value: %s", it)
+                it?.let {
+                    adapter.submitList(it.photosStatsBySol)
+                }
             }
         )
 

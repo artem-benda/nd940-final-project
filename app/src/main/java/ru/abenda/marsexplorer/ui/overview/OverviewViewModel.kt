@@ -28,9 +28,9 @@ class OverviewViewModel @Inject constructor(
         launchManifestRefresh(roverType)
     }
 
-    val photosStatsBySol = savedStateHandle.getLiveData<RoverType>(ROVER_TYPE)
+    val manifest = savedStateHandle.getLiveData<RoverType>(ROVER_TYPE)
         .switchMap { roverType ->
-            roverManifestRepository.getPhotosStatsBySol(roverType)
+            roverManifestRepository.getManifestFlow(roverType)
                 .asLiveData()
         }
 
@@ -42,6 +42,12 @@ class OverviewViewModel @Inject constructor(
             _refreshState.trackCallState {
                 roverManifestRepository.refreshManifest(roverType)
             }
+        }
+    }
+
+    fun launchLoadThumbnails(roverType: RoverType, sol: Int) {
+        viewModelScope.launch {
+            roverManifestRepository.refreshThumbnailsIfAbsent(roverType, sol)
         }
     }
 }

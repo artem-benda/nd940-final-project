@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import ru.abenda.marsexplorer.R
 
 enum class CameraType private constructor(@StringRes val cameraNameResId: Int) {
-    all(R.string.all_cameras),
     FHAZ(R.string.FHAZ),
     RHAZ(R.string.RHAZ),
     MAST(R.string.MAST),
