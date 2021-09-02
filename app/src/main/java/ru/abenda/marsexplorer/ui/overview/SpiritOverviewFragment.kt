@@ -6,5 +6,7 @@ import ru.abenda.marsexplorer.data.enums.RoverType
 @AndroidEntryPoint
 class SpiritOverviewFragment : OverviewFragment(
     RoverType.Spirit,
-    SpiritOverviewFragmentDirections.actionSpiritOverviewFragmentToPhotosFragment()
+    { sol ->
+        SpiritOverviewFragmentDirections.actionSpiritOverviewFragmentToPhotosFragment(RoverType.Spirit, sol)
+    }
 )

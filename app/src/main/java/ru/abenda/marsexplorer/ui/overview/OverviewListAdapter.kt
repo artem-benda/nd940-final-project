@@ -14,11 +14,11 @@ class OverviewListAdapter(private val itemListener: OverviewListItemListener) :
 
     companion object DiffCallback : DiffUtil.ItemCallback<PhotosStatsBySolWithThumbnails>() {
         override fun areItemsTheSame(oldItem: PhotosStatsBySolWithThumbnails, newItem: PhotosStatsBySolWithThumbnails): Boolean {
-            return oldItem === newItem
+            return oldItem.photosStatsBySol.id == newItem.photosStatsBySol.id && oldItem.thumbnails.size == newItem.thumbnails.size
         }
 
         override fun areContentsTheSame(oldItem: PhotosStatsBySolWithThumbnails, newItem: PhotosStatsBySolWithThumbnails): Boolean {
-            return oldItem.photosStatsBySol == newItem.photosStatsBySol && oldItem.thumbnails.size == newItem.thumbnails.size
+            return oldItem.photosStatsBySol.id == newItem.photosStatsBySol.id && oldItem.thumbnails.size == newItem.thumbnails.size
         }
     }
 

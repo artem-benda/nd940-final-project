@@ -9,5 +9,18 @@
     <dimen name="placeholder_item_height">32dp</dimen>
     <dimen name="error_text_size">24sp</dimen>
     <dimen name="thumbnail_list_height">250dp</dimen>
-    <dimen name="thumbnail_item_width">185dp</dimen>
+    <dimen name="thumbnail_item_width">250dp</dimen>
+    <dimen name="margin_x1">16dp</dimen>
+    <dimen name="margin_x2">32dp</dimen>
+    <dimen name="margin_x3">48dp</dimen>
+    <dimen name="margin_x4">64dp</dimen>
+    <dimen name="padding_x1">16dp</dimen>
+    <dimen name="padding_x2">32dp</dimen>
+    <dimen name="padding_x3">48dp</dimen>
+    <dimen name="padding_x4">64dp</dimen>
+    <dimen name="thumbnail_list_margin">2dp</dimen>
+    <dimen name="thumbnail_margin">2dp</dimen>
+    <dimen name="photo_list_margin">2dp</dimen>
+    <dimen name="photo_margin">2dp</dimen>
+    <dimen name="title_item_top_margin">8dp</dimen>
 </resources>

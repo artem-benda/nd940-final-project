@@ -4,31 +4,72 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.abenda.marsexplorer.R
+import ru.abenda.marsexplorer.data.enums.RoverType
+import ru.abenda.marsexplorer.databinding.PhotosFragmentBinding
 
 @AndroidEntryPoint
 class PhotosFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = PhotosFragment()
-    }
-
-    private lateinit var viewModel: PhotosViewModel
+    private val viewModel: PhotosViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.photos_fragment, container, false)
-    }
+        val args = PhotosFragmentArgs.fromBundle(requireArguments())
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PhotosViewModel::class.java)
-        // TODO: Use the ViewModel
+        val photosAdapter = PagingPhotosAdapter(
+            PhotoListItemListener { }
+        )
+        val header = PhotosLoadingStateAdapter { photosAdapter.retry() }
+        photosAdapter.withLoadStateHeaderAndFooter(header, header)
+
+        val binding = PhotosFragmentBinding.inflate(layoutInflater, container, false)
+        binding.list.adapter = photosAdapter
+
+        lifecycleScope.launch {
+            viewModel.fetchPhotos(args.roverType, args.sol).collectLatest { pagingData ->
+                photosAdapter.submitData(pagingData)
+            }
+        }
+
+        lifecycleScope.launch {
+            photosAdapter.loadStateFlow.collectLatest { loadState ->
+                header.loadState = loadState.mediator
+                    ?.refresh
+                    ?.takeIf { it is LoadState.Error && photosAdapter.itemCount > 0 }
+                    ?: loadState.prepend
+
+                val isListEmpty = loadState.refresh is LoadState.NotLoading && photosAdapter.itemCount == 0
+                binding.emptyList.isVisible = isListEmpty
+                binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+                binding.progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                binding.retryButton.isVisible = loadState.mediator?.refresh is LoadState.Error && photosAdapter.itemCount == 0
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+                errorState?.let {
+                    Toast.makeText(
+                        this@PhotosFragment.context,
+                        "An error occurred: ${it.error}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        return binding.root
     }
 }

@@ -16,11 +16,12 @@ import ru.abenda.marsexplorer.data.api.NetworkCallState
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.databinding.FragmentOverviewBinding
 import timber.log.Timber
+import androidx.recyclerview.widget.DividerItemDecoration
 
 @AndroidEntryPoint
 abstract class OverviewFragment(
     val roverType: RoverType,
-    private val clickNavDirection: NavDirections
+    private val clickNavDirection: (sol: Int) -> NavDirections
 ) : Fragment() {
 
     private val viewModel: OverviewViewModel by viewModels()
@@ -38,7 +39,7 @@ abstract class OverviewFragment(
         val adapter = OverviewListAdapter(
             OverviewListItemListener(
                 {
-                    findNavController().navigate(clickNavDirection)
+                    findNavController().navigate(clickNavDirection(it.photosStatsBySol.sol))
                 },
                 {
                     viewModel.launchLoadThumbnails(it.photosStatsBySol.roverType, it.photosStatsBySol.sol)
@@ -46,6 +47,12 @@ abstract class OverviewFragment(
             )
         )
         binding.overviewList.adapter = adapter
+
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.overviewList.context,
+            DividerItemDecoration.VERTICAL
+        )
+        binding.overviewList.addItemDecoration(dividerItemDecoration)
 
         viewModel.manifest.observe(
             viewLifecycleOwner,

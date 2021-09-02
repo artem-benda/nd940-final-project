@@ -17,11 +17,11 @@ interface RoverPhotosDao {
     @Query(
         "SELECT * FROM rover_photos WHERE " +
             "rover_type = :roverType AND " +
-            "camera_type = :cameraType AND " +
+            "(camera_type = :cameraType OR :cameraType is NULL) AND " +
             "sol = :sol " +
             "ORDER BY id DESC"
     )
-    fun findPhotos(roverType: RoverType, cameraType: CameraType, sol: Int): PagingSource<Int, RoverPhoto>
+    fun findPhotos(roverType: RoverType, cameraType: CameraType?, sol: Int): PagingSource<Int, RoverPhoto>
 
     @Query("DELETE FROM rover_photos")
     suspend fun clear()

@@ -12,6 +12,7 @@ import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.data.db.AppDatabase
 import ru.abenda.marsexplorer.data.db.model.RemoteKey
 import ru.abenda.marsexplorer.data.db.model.RoverPhoto
+import ru.abenda.marsexplorer.data.mapper.mapDtoToCameraType
 import java.io.IOException
 
 @ExperimentalPagingApi
@@ -19,7 +20,7 @@ class RoverPhotosMediator(
     private val api: NasaMarsRoverApi,
     private val db: AppDatabase,
     private val roverType: RoverType,
-    private val cameraType: CameraType,
+    private val cameraType: CameraType?,
     private val sol: Int
 ) : RemoteMediator<Int, RoverPhoto>() {
 
@@ -68,7 +69,7 @@ class RoverPhotosMediator(
                     RemoteKey(photoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 val photoModels = photos.map {
-                    RoverPhoto(it.id, it.sol, cameraType, it.imageSrc, it.earthDate, roverType)
+                    RoverPhoto(it.id, it.sol, mapDtoToCameraType(it.camera), it.imageSrc, it.earthDate, roverType)
                 }
                 db.remoteKeysDao().insertAll(keyModels)
                 db.roverPhotosDao().insertAll(photoModels)

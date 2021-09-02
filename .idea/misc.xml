@@ -15,7 +15,9 @@
         <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/list_item_photo.xml" value="0.2635416666666667" />
         <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/list_item_thumbnail.xml" value="0.2390625" />
         <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/nav_header.xml" value="0.28020833333333334" />
+        <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/photo_fragment.xml" value="0.29791666666666666" />
         <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/photos_fragment.xml" value="0.28020833333333334" />
+        <entry key="..\:/Dev/MarsExplorer/app/src/main/res/layout/photos_load_state_footer_view_item.xml" value="0.2671875" />
         <entry key="..\:/Dev/MarsExplorer/app/src/main/res/menu/navdrawer_menu.xml" value="0.28020833333333334" />
       </map>
     </option>

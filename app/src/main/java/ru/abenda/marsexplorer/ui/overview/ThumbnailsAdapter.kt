@@ -13,11 +13,11 @@ class ThumbnailsAdapter :
 
     companion object DiffCallback : DiffUtil.ItemCallback<PhotosStatsBySolThumbnail>() {
         override fun areItemsTheSame(oldItem: PhotosStatsBySolThumbnail, newItem: PhotosStatsBySolThumbnail): Boolean {
-            return oldItem === newItem
+            return oldItem.imageSrc == newItem.imageSrc
         }
 
         override fun areContentsTheSame(oldItem: PhotosStatsBySolThumbnail, newItem: PhotosStatsBySolThumbnail): Boolean {
-            return oldItem == newItem
+            return oldItem.imageSrc == newItem.imageSrc
         }
     }
 

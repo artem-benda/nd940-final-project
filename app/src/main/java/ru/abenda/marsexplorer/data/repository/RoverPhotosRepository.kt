@@ -22,7 +22,7 @@ class RoverPhotosRepository @Inject constructor(
 
     fun getSearchResultStream(
         roverType: RoverType,
-        cameraType: CameraType,
+        cameraType: CameraType?,
         sol: Int
     ): Flow<PagingData<RoverPhoto>> {
         val pagingSourceFactory = { db.roverPhotosDao().findPhotos(roverType, cameraType, sol) }

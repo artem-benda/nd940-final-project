@@ -6,5 +6,7 @@ import ru.abenda.marsexplorer.data.enums.RoverType
 @AndroidEntryPoint
 class CuriosityOverviewFragment : OverviewFragment(
     RoverType.Curiosity,
-    CuriosityOverviewFragmentDirections.actionCuriosityOverviewFragmentToPhotosFragment()
+    { sol ->
+        CuriosityOverviewFragmentDirections.actionCuriosityOverviewFragmentToPhotosFragment(RoverType.Curiosity, sol)
+    }
 )

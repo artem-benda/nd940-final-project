@@ -8,24 +8,35 @@
     <fragment
         android:id="@+id/photosFragment"
         android:name="ru.abenda.marsexplorer.ui.photos.PhotosFragment"
-        android:label="photos_fragment"
+        android:label=""
         tools:layout="@layout/photos_fragment" >
         <action
             android:id="@+id/action_photosFragment_to_photoFragment"
             app:destination="@id/photoFragment" />
+        <argument
+            android:name="roverType"
+            app:argType="ru.abenda.marsexplorer.data.enums.RoverType" />
+        <argument
+            android:name="sol"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
         android:name="ru.abenda.marsexplorer.ui.photo.PhotoFragment"
-        android:label="photo_fragment"
-        tools:layout="@layout/photo_fragment" />
+        android:label=""
+        tools:layout="@layout/photo_fragment" >
+        <argument
+            android:name="photo"
+            app:argType="ru.abenda.marsexplorer.data.db.model.RoverPhoto" />
+    </fragment>
     <fragment
         android:id="@+id/curiosityOverviewFragment"
         android:name="ru.abenda.marsexplorer.ui.overview.CuriosityOverviewFragment"
-        android:label="@string/app_name">
+        android:label="@string/curiosity">
         <action
             android:id="@+id/action_curiosityOverviewFragment_to_photosFragment"
-            app:destination="@id/photosFragment" />
+            app:destination="@id/photosFragment" >
+        </action>
     </fragment>
     <fragment
         android:id="@+id/opportunityOverviewFragment"
