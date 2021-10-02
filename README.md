@@ -6,7 +6,7 @@ Mars Explorer
 
 Mars Explorer is an app to view photos from NASA's rovers, which utilizes NASA's Open Api [link](https://api.nasa.gov/), see "Mars Rover Photos"
 
-The app is consists of three screens: A Main screen with a list of Rover Sols and small list of thumbnails. Photos list screens, which shows all photos for the rover and Sol. The third screen is photo details. 
+The app consists of three screens: A Main screen with a list of Rover Sols and small list of thumbnails. Photos list screens, which shows all photos for the rover and Sol. The third screen is photo details. 
 
 This project is my final project for ND-940
 
@@ -26,7 +26,7 @@ To get the project running on your local machine, you need to follow these steps
 
 Use this to clone it to your local machine:
 ```bash
-git clone https://github.com/udacity/REPOSITORY_NAME.git
+git clone https://github.com/artem-benda/nd940-final-project.git
 ```
 
 **Step 2: Check out the master branch**
