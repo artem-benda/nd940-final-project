@@ -36,7 +36,7 @@ This branch is going to let you start working with it. The command to check out 
 ```bash
 git checkout master
 ```
-**Step 3: Obtain you key for the API and replace DEMO_KEY in app/build.gradle
+**Step 3: Obtain you key for the API and replace DEMO_KEY in app/build.gradle**
 
 Open [https://api.nasa.gov/](https://api.nasa.gov/) and fill the form "Generate API Key". Replace the DEMO_KEY key in app/build.gradle with newly obtained key. 
 
