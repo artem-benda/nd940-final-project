@@ -1,6 +1,4 @@
-# Project Title
-
-Mars Explorer
+# Mars Explorer
 
 ## Getting Started
 
