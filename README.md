@@ -16,6 +16,10 @@ This project is my final project for ND-940
 
 ![Milestones](doc/milestones.MD)
 
+### Rubric checklist
+
+![Rubric](doc/final_project_rubric.docx)
+
 ### Installation
 
 To get the project running on your local machine, you need to follow these steps:
