@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.EnumJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.abenda.marsexplorer.BuildConfig
 import ru.abenda.marsexplorer.data.api.NasaMarsRoverApi
 import ru.abenda.marsexplorer.data.db.AppDatabase
+import ru.abenda.marsexplorer.data.enums.CameraType
 import timber.log.Timber
 import java.util.concurrent.Executors
 import javax.inject.Named
@@ -38,6 +40,11 @@ class AppModule {
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
+        .add(
+            CameraType::class.java,
+            EnumJsonAdapter.create(CameraType::class.java)
+                .withUnknownFallback(CameraType.OTHER)
+        )
         .build()
 
     @Provides

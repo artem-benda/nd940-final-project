@@ -24,4 +24,15 @@
     <string name="error_network_call">Error executing request</string>
     <string name="OTHER">Other Camera</string>
     <string name="solar_day_on_mars">Sol %d</string>
+    <string name="photos_fragment_title_template">%s: Sol %d</string>
+    <string name="rover_type_template">Rover: %s</string>
+    <string name="sol_template">Solar day on Mars (sol): %d</string>
+    <string name="earth_date_template">Earth date: %s</string>
+    <string name="camera_type_template">Camera type: %s</string>
+    <string name="photo_details">Photo details</string>
+    <string name="new_photos_channel">New mars photos notifications</string>
+    <string name="notification_title">There were added new mars photos</string>
+    <string name="new_photos_notification_channel_id">mars_rover_new_photos</string>
+    <string name="new_photos_notification_channel_name">New mars photos</string>
+    <string name="new_photos_template">There are %d new photos availabele</string>
 </resources>

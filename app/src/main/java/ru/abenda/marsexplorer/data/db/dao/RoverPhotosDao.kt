@@ -19,7 +19,7 @@ interface RoverPhotosDao {
             "rover_type = :roverType AND " +
             "(camera_type = :cameraType OR :cameraType is NULL) AND " +
             "sol = :sol " +
-            "ORDER BY id DESC"
+            "ORDER BY id"
     )
     fun findPhotos(roverType: RoverType, cameraType: CameraType?, sol: Int): PagingSource<Int, RoverPhoto>
 

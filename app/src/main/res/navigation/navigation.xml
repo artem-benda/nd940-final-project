@@ -10,21 +10,21 @@
         android:name="ru.abenda.marsexplorer.ui.photos.PhotosFragment"
         android:label=""
         tools:layout="@layout/photos_fragment" >
-        <action
-            android:id="@+id/action_photosFragment_to_photoFragment"
-            app:destination="@id/photoFragment" />
         <argument
             android:name="roverType"
             app:argType="ru.abenda.marsexplorer.data.enums.RoverType" />
         <argument
             android:name="sol"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_photosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
         android:name="ru.abenda.marsexplorer.ui.photo.PhotoFragment"
-        android:label=""
-        tools:layout="@layout/photo_fragment" >
+        android:label="@string/photo_details"
+        tools:layout="@layout/photo_fragment">
         <argument
             android:name="photo"
             app:argType="ru.abenda.marsexplorer.data.db.model.RoverPhoto" />

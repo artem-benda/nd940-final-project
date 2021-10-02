@@ -13,6 +13,7 @@ import ru.abenda.marsexplorer.data.api.NetworkCallState
 import ru.abenda.marsexplorer.data.api.trackCallState
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.data.repository.RoverManifestRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 private const val ROVER_TYPE = "rover_type"
@@ -24,12 +25,14 @@ class OverviewViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun setRoverType(roverType: RoverType) {
+        Timber.i("setRoverType, roverType = %s", roverType)
         savedStateHandle.set(ROVER_TYPE, roverType)
         launchManifestRefresh(roverType)
     }
 
     val manifest = savedStateHandle.getLiveData<RoverType>(ROVER_TYPE)
         .switchMap { roverType ->
+            Timber.i("manifest reload, roverType = %s", roverType)
             roverManifestRepository.getManifestFlow(roverType)
                 .asLiveData()
         }
@@ -40,6 +43,7 @@ class OverviewViewModel @Inject constructor(
     fun launchManifestRefresh(roverType: RoverType) {
         viewModelScope.launch {
             _refreshState.trackCallState {
+                Timber.i("refreshManifest... roverType = %s", roverType)
                 roverManifestRepository.refreshManifest(roverType)
             }
         }
@@ -47,6 +51,7 @@ class OverviewViewModel @Inject constructor(
 
     fun launchLoadThumbnails(roverType: RoverType, sol: Int) {
         viewModelScope.launch {
+            Timber.i("refreshThumbnailsIfAbsent... roverType = %s, sol = %d", roverType, sol)
             roverManifestRepository.refreshThumbnailsIfAbsent(roverType, sol)
         }
     }

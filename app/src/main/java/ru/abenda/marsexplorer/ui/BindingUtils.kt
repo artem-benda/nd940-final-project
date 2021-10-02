@@ -9,8 +9,12 @@ import androidx.databinding.BindingAdapter
 import androidx.paging.LoadState
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import ru.abenda.marsexplorer.R
+import ru.abenda.marsexplorer.data.api.NetworkCallState
 import ru.abenda.marsexplorer.data.db.model.PhotosStatsBySolThumbnail
 import ru.abenda.marsexplorer.data.db.model.RoverPhoto
+import ru.abenda.marsexplorer.data.enums.CameraType
+import timber.log.Timber
 
 @BindingAdapter("loadImage")
 fun ImageView.loadImage(roverPhoto: RoverPhoto?) {
@@ -20,8 +24,8 @@ fun ImageView.loadImage(roverPhoto: RoverPhoto?) {
         .with(this)
         .load(roverPhoto.imageSrc)
         .centerCrop()
-        .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-        //.error(R.drawable.ic_pic_error)
+        .placeholder(R.drawable.ic_loading)
+        .error(R.drawable.ic_error)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(this)
 }
@@ -34,8 +38,8 @@ fun ImageView.loadThumbnail(thumbnail: PhotosStatsBySolThumbnail?) {
         .with(this)
         .load(thumbnail.imageSrc)
         .centerCrop()
-        .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-        //.error(R.drawable.ic_pic_error)
+        .placeholder(R.drawable.ic_loading)
+        .error(R.drawable.ic_error)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(this)
 }
@@ -54,4 +58,20 @@ fun ProgressBar.setProgressVisibility(loadState: LoadState?) {
 @BindingAdapter("setRetryVisibility")
 fun Button.setRetryVisibility(loadState: LoadState?) {
     visibility = if (loadState is LoadState.Error) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("setProgressVisibility")
+fun ProgressBar.setProgressVisibility(networkCallState: NetworkCallState?) {
+    Timber.d("setProgressVisibility, networkCallState = %s", networkCallState)
+    val isPending = networkCallState is NetworkCallState.Pending
+    Timber.d("setProgressVisibility, isPending = %b", isPending)
+    visibility = if (isPending) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("formatCameraType")
+fun TextView.formatCameraType(cameraType: CameraType?) {
+    cameraType ?: return
+
+    val cameraName = context.getString(cameraType.cameraNameResId)
+    text = context.getString(R.string.camera_type_template, cameraName)
 }

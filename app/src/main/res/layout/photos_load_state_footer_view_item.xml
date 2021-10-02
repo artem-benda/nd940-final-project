@@ -30,6 +30,8 @@
             android:id="@+id/progressBar"
             android:layout_gravity="center"
             style="?android:attr/progressBarStyle"
+            android:indeterminateDrawable="@drawable/ic_loading"
+            app:setProgressVisibility="@{loadState}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -38,6 +40,7 @@
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:setRetryVisibility="@{loadState}"
             android:text="@string/retry" />
     </LinearLayout>
 </layout>

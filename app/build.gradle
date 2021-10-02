@@ -9,19 +9,19 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "ru.abenda.marsexplorer"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"DEMO_KEY\"")
+        buildConfigField("String", "API_KEY", "\"Z9Qn7piFbEBdSmzapqxNQdAu7jDPHUt08wjnsXjk\"")
         buildConfigField("String", "BASE_URL", "\"https://api.nasa.gov/mars-photos/api/v1/\"")
 
         multiDexEnabled = true
@@ -63,6 +63,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.work:work-runtime-ktx:2.6.0'
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test.ext:junit:$version_ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
@@ -70,6 +71,9 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$version_hilt"
     kapt "com.google.dagger:hilt-compiler:$version_hilt"
+    implementation 'androidx.hilt:hilt-work:1.0.0'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+
     // For instrumentation tests
     androidTestImplementation  "com.google.dagger:hilt-android-testing:$version_hilt"
     kaptAndroidTest "com.google.dagger:hilt-compiler:$version_hilt"
@@ -90,6 +94,7 @@ dependencies {
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.squareup.moshi:moshi-adapters:$version_moshi"
 
 
     // Retrofit
@@ -119,7 +124,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$version_room"
     testImplementation "androidx.room:room-testing:$version_room"
     // Room Paging 3 Integration (only in 2.4.x)
-    implementation "androidx.room:room-paging:2.4.0-alpha04"
+    implementation "androidx.room:room-paging:$version_room"
 
     // Timber logging
     implementation "com.jakewharton.timber:timber:$version_timber"

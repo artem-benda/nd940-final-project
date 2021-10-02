@@ -17,6 +17,7 @@ import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.databinding.FragmentOverviewBinding
 import timber.log.Timber
 import androidx.recyclerview.widget.DividerItemDecoration
+import ru.abenda.marsexplorer.notifications.createChannel
 
 @AndroidEntryPoint
 abstract class OverviewFragment(
@@ -35,6 +36,8 @@ abstract class OverviewFragment(
 
         val binding = FragmentOverviewBinding.inflate(layoutInflater, container, false)
         binding.lifecycleOwner = this
+
+        binding.viewModel = viewModel
 
         val adapter = OverviewListAdapter(
             OverviewListItemListener(
@@ -67,6 +70,7 @@ abstract class OverviewFragment(
         viewModel.refreshState.observe(
             viewLifecycleOwner,
             Observer {
+                Timber.i("refreshState is %s", it)
                 when (it) {
                     is NetworkCallState.Error<*> -> {
                         Timber.e(it.error)
@@ -78,6 +82,12 @@ abstract class OverviewFragment(
                     }
                 }
             }
+        )
+
+        createChannel(
+            requireActivity().applicationContext,
+            getString(R.string.new_photos_notification_channel_id),
+            getString(R.string.new_photos_notification_channel_name)
         )
 
         return binding.root

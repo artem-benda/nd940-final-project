@@ -13,6 +13,7 @@ import ru.abenda.marsexplorer.data.db.AppDatabase
 import ru.abenda.marsexplorer.data.db.model.RemoteKey
 import ru.abenda.marsexplorer.data.db.model.RoverPhoto
 import ru.abenda.marsexplorer.data.mapper.mapDtoToCameraType
+import timber.log.Timber
 import java.io.IOException
 
 @ExperimentalPagingApi
@@ -29,6 +30,7 @@ class RoverPhotosMediator(
     }
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, RoverPhoto>): MediatorResult {
+        Timber.i("load, start, loadType = %s, state = %s", loadType, state)
 
         val page = when (loadType) {
             LoadType.REFRESH -> {
@@ -38,25 +40,24 @@ class RoverPhotosMediator(
             LoadType.PREPEND -> {
                 val remoteKey = getRemoteKeyForFirstItem(state)
                 val prevKey = remoteKey?.prevKey
-                if (prevKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
-                }
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                 prevKey
             }
             LoadType.APPEND -> {
                 val remoteKey = getRemoteKeyForLastItem(state)
                 val nextKey = remoteKey?.nextKey
-                if (nextKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
-                }
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKey != null)
                 nextKey
             }
         }
+        Timber.d("load, page = %d", page)
 
         try {
             val apiResponse = api.findPhotosBySol(roverType, sol, page, cameraType)
 
             val photos = apiResponse.photos
+            Timber.d("load, photos size is %d", photos.size)
+
             val endOfPaginationReached = photos.isEmpty()
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -65,6 +66,7 @@ class RoverPhotosMediator(
                 }
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
+                Timber.d("load, prevKey = %d, nextKey = %d", prevKey, nextKey)
                 val keyModels = photos.map {
                     RemoteKey(photoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
@@ -76,8 +78,10 @@ class RoverPhotosMediator(
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: IOException) {
+            Timber.e(exception, "IO exception")
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
+            Timber.e(exception, "Http exception")
             return MediatorResult.Error(exception)
         }
     }

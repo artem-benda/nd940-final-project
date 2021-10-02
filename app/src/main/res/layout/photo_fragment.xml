@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.photo.PhotoFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+        <variable
+            name="photo"
+            type="ru.abenda.marsexplorer.data.db.model.RoverPhoto" />
+    </data>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutDescription="@xml/photo_layout_description"
+            tools:context=".ui.photo.PhotoFragment">
 
-</FrameLayout>
+            <ImageView
+                android:id="@+id/image"
+                app:loadImage="@{photo}"
+                android:contentDescription="@null"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/photo_header_height" />
+
+            <TextView
+                android:id="@+id/roverType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/padding_x1"
+                android:paddingEnd="@dimen/padding_x1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:text="@{String.format(@string/rover_type_template, photo.roverType.toString() )}" />
+
+            <TextView
+                android:id="@+id/sol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/padding_x1"
+                android:paddingEnd="@dimen/padding_x1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:text="@{String.format(@string/sol_template, photo.sol )}" />
+
+            <TextView
+                android:id="@+id/earthDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/padding_x1"
+                android:paddingEnd="@dimen/padding_x1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:text="@{String.format(@string/earth_date_template, photo.earthDate )}" />
+
+            <TextView
+                android:id="@+id/cameraType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/padding_x1"
+                android:paddingEnd="@dimen/padding_x1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:formatCameraType="@{photo.cameraType}" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+    </ScrollView>
+</layout>

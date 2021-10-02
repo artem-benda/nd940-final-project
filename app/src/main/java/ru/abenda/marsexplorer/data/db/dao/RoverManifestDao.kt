@@ -26,7 +26,7 @@ interface RoverManifestDao {
     fun getStatsByRoverType(roverType: RoverType): Flow<List<PhotosStatsBySol>>
 
     @Query("SELECT * FROM photos_stats_by_sol WHERE id = :id")
-    suspend fun findStatsById(id: String): PhotosStatsBySol
+    suspend fun findStatsById(id: String): PhotosStatsBySol?
 
     @Query("DELETE FROM rovers_manifest WHERE rover_type = :roverType")
     suspend fun deleteById(roverType: RoverType)
@@ -36,4 +36,7 @@ interface RoverManifestDao {
 
     @Query("DELETE FROM photos_stats_by_sol")
     suspend fun clearStatsBySol()
+
+    @Query("SELECT SUM(total_photos) from rovers_manifest")
+    suspend fun count(): Long
 }

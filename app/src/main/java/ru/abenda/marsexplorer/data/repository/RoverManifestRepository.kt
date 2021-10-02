@@ -5,9 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.abenda.marsexplorer.data.api.NasaMarsRoverApi
 import ru.abenda.marsexplorer.data.db.AppDatabase
 import ru.abenda.marsexplorer.data.db.model.PhotosStatsBySol
-import ru.abenda.marsexplorer.data.db.model.RoverManifest
 import ru.abenda.marsexplorer.data.db.model.composite.RoverManifestCompositeModel
-import ru.abenda.marsexplorer.data.enums.CameraType
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.data.mapper.computePhotosStatsBySolId
 import ru.abenda.marsexplorer.data.mapper.mapDtoToManifest
@@ -31,6 +29,10 @@ class RoverManifestRepository @Inject constructor(
         }
     }
 
+    suspend fun countPhotosByManifest(): Long {
+        return db.roverManifestDao().count()
+    }
+
     fun getManifestFlow(roverType: RoverType): Flow<RoverManifestCompositeModel> {
         return db.roverManifestDao().getCompositeById(roverType)
     }
@@ -44,7 +46,7 @@ class RoverManifestRepository @Inject constructor(
         val statsBySol = db.roverManifestDao().findStatsById(statsBySolId)
         val thumbnailsLocal = db.thumbnailsDao().findByStatsBySolId(statsBySolId)
 
-        if (statsBySol.totalPhotos == 0 || thumbnailsLocal.isNotEmpty())
+        if (statsBySol?.totalPhotos ?: 0 == 0 || thumbnailsLocal.isNotEmpty())
             return
 
         val photosResult = api.findPhotosBySol(roverType, sol, 1)
