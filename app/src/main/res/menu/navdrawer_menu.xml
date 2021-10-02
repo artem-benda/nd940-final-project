@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/curiosityOverviewFragment"
+        android:title="@string/curiosity" />
+
+    <item
+        android:id="@+id/opportunityOverviewFragment"
+        android:title="@string/opportunity" />
+
+    <item
+        android:id="@+id/spiritOverviewFragment"
+        android:title="@string/spirit" />
+</menu>

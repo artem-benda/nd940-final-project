@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="statsBySol"
+            type="ru.abenda.marsexplorer.data.db.model.composite.PhotosStatsBySolWithThumbnails" />
+        <variable
+            name="clickListener"
+            type="ru.abenda.marsexplorer.ui.overview.OverviewListItemListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/title_item_top_margin"
+            android:lines="1"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{String.format(@string/solar_day_on_mars, statsBySol.photosStatsBySol.sol)}"
+            android:layout_marginStart="@dimen/margin_x1"
+            android:layout_marginEnd="@dimen/margin_x1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/thumbnails"
+            android:padding="@dimen/thumbnail_list_margin"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thumbnail_list_height" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewAll"
+            app:layout_constraintTop_toBottomOf="@id/thumbnails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:text="@{String.format(@string/view_all_n_photos, statsBySol.photosStatsBySol.totalPhotos)}"
+            android:onClick="@{() -> clickListener.onClick(statsBySol)}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/curiosityOverviewFragment">
+
+    <fragment
+        android:id="@+id/photosFragment"
+        android:name="ru.abenda.marsexplorer.ui.photos.PhotosFragment"
+        android:label=""
+        tools:layout="@layout/photos_fragment" >
+        <argument
+            android:name="roverType"
+            app:argType="ru.abenda.marsexplorer.data.enums.RoverType" />
+        <argument
+            android:name="sol"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_photosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="ru.abenda.marsexplorer.ui.photo.PhotoFragment"
+        android:label="@string/photo_details"
+        tools:layout="@layout/photo_fragment">
+        <argument
+            android:name="photo"
+            app:argType="ru.abenda.marsexplorer.data.db.model.RoverPhoto" />
+    </fragment>
+    <fragment
+        android:id="@+id/curiosityOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.CuriosityOverviewFragment"
+        android:label="@string/curiosity">
+        <action
+            android:id="@+id/action_curiosityOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/opportunityOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.OpportunityOverviewFragment"
+        android:label="@string/opportunity">
+        <action
+            android:id="@+id/action_opportunityOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spiritOverviewFragment"
+        android:name="ru.abenda.marsexplorer.ui.overview.SpiritOverviewFragment"
+        android:label="@string/spirit">
+        <action
+            android:id="@+id/action_spiritOverviewFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+</navigation>
