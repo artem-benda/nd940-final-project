@@ -45,6 +45,9 @@ class OverviewViewModel @Inject constructor(
             _refreshState.trackCallState {
                 Timber.i("refreshManifest... roverType = %s", roverType)
                 roverManifestRepository.refreshManifest(roverType)
+                    .onFailure {
+                        Timber.e(it, "refreshManifest failed")
+                    }
             }
         }
     }
@@ -53,6 +56,9 @@ class OverviewViewModel @Inject constructor(
         viewModelScope.launch {
             Timber.i("refreshThumbnailsIfAbsent... roverType = %s, sol = %d", roverType, sol)
             roverManifestRepository.refreshThumbnailsIfAbsent(roverType, sol)
+                .onFailure {
+                    Timber.e(it, "refreshThumbnailsIfAbsent failed")
+                }
         }
     }
 }

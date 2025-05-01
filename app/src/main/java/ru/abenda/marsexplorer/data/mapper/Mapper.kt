@@ -45,7 +45,7 @@ fun mapDtosToThumbnails(dtos: List<RoverPhotoDto>, roverType: RoverType): List<P
             return@mapIndexed PhotosStatsBySolThumbnail(
                 statsBySolId = computePhotosStatsBySolId(roverType, sol),
                 order = index,
-                imageSrc = imageSrc
+                imageSrc = imageSrc.replace("http", "https")
             )
         }
     }
@@ -58,7 +58,7 @@ fun mapDtosToPhotos(dtos: List<RoverPhotoDto>, roverType: RoverType): List<Rover
                 id = id,
                 sol = sol,
                 cameraType = mapDtoToCameraType(camera),
-                imageSrc = imageSrc,
+                imageSrc = imageSrc.replace("http", "https"),
                 earthDate = earthDate,
                 roverType = roverType
             )

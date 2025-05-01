@@ -71,7 +71,7 @@ class RoverPhotosMediator(
                     RemoteKey(photoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 val photoModels = photos.map {
-                    RoverPhoto(it.id, it.sol, mapDtoToCameraType(it.camera), it.imageSrc, it.earthDate, roverType)
+                    RoverPhoto(it.id, it.sol, mapDtoToCameraType(it.camera), it.imageSrc.replace("http:", "https:"), it.earthDate, roverType)
                 }
                 db.remoteKeysDao().insertAll(keyModels)
                 db.roverPhotosDao().insertAll(photoModels)

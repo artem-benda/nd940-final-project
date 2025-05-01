@@ -30,6 +30,7 @@ class OverviewListAdapter(private val itemListener: OverviewListItemListener) :
 
             Timber.d("Setting %d thumbnails", statsBySol.thumbnails.size)
             (binding.thumbnails.adapter as ThumbnailsAdapter).submitList(statsBySol.thumbnails)
+            binding.thumbnails.setRecycledViewPool(recycledViewPool)
             binding.executePendingBindings()
 
             listener.onBind(statsBySol)
@@ -44,6 +45,8 @@ class OverviewListAdapter(private val itemListener: OverviewListItemListener) :
 
                 return OverviewListViewHolder(binding)
             }
+
+            val recycledViewPool = RecyclerView.RecycledViewPool()
         }
     }
 

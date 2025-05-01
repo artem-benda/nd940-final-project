@@ -6,22 +6,25 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id 'com.google.devtools.ksp'
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
+    namespace 'ru.abenda.marsexplorer'
+
+    compileSdkVersion 35
+    buildToolsVersion "35.0.0"
 
     defaultConfig {
         applicationId "ru.abenda.marsexplorer"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 35
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"DEMO_KEY\"")
+        buildConfigField("String", "API_KEY", "\"hAOq3n74BaKmh8m7BDB6qvfeuIUx6Rk9zsRdzVDE\"")
         buildConfigField("String", "BASE_URL", "\"https://api.nasa.gov/mars-photos/api/v1/\"")
 
         multiDexEnabled = true
@@ -51,85 +54,81 @@ android {
     }
     buildFeatures {
         dataBinding true
+        buildConfig true
     }
 }
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
-    implementation "androidx.core:core-ktx:$version_core"
-    implementation "androidx.appcompat:appcompat:$version_compat"
-    implementation "com.google.android.material:material:$version_material"
-    implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.work:work-runtime-ktx:2.6.0'
-    testImplementation "junit:junit:$version_junit"
-    androidTestImplementation "androidx.test.ext:junit:$version_ext_junit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
+    implementation(libs.kotlin.stdlib)
+    implementation libs.core.ktx
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraint.layout
+    implementation libs.legacy.support.v4
+    implementation libs.lifecycle.livedata.ktx
+    implementation libs.work.runtime.ktx
+    testImplementation libs.junit
+    androidTestImplementation libs.junit.ext
+    androidTestImplementation libs.espresso
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:$version_hilt"
-    kapt "com.google.dagger:hilt-compiler:$version_hilt"
-    implementation 'androidx.hilt:hilt-work:1.0.0'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0'
+    implementation libs.hilt.dagger.android
+    ksp libs.dagger.hilt.compiler
+    implementation libs.hilt.work
+    ksp libs.hilt.compiler
 
     // For instrumentation tests
-    androidTestImplementation  "com.google.dagger:hilt-android-testing:$version_hilt"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$version_hilt"
+    androidTestImplementation  libs.dagger.hilt.android.testing
+    kspAndroidTest libs.dagger.hilt.compiler
     // For local unit tests
-    testImplementation "com.google.dagger:hilt-android-testing:$version_hilt"
-    kaptTest "com.google.dagger:hilt-compiler:$version_hilt"
+    testImplementation libs.dagger.hilt.android.testing
+    kspTest libs.dagger.hilt.compiler
 
     // Multidex
-    implementation "androidx.multidex:multidex:$version_multidex"
+    implementation libs.multidex
 
     // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
+    implementation(libs.lifecycle.viewmodel.ktx)
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
 
     // Moshi
-    implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
-    implementation "com.squareup.moshi:moshi-adapters:$version_moshi"
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.adapters)
 
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:$version_retrofit") {
+    implementation(libs.retrofit) {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
     // OkHttp
-    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$version_okhttp"
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
 
     // Retrofit with Moshi Converter
-    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+    implementation(libs.retrofit.converter.moshi)
 
     // Glide
-    implementation "com.github.bumptech.glide:glide:$version_glide"
+    implementation(libs.glide)
 
     // RecyclerView
-    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+    implementation(libs.recyclerview)
 
     // Paging
-    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
+    implementation(libs.paging.runtime.ktx)
 
     // Room
-    implementation "androidx.room:room-runtime:$version_room"
-    implementation "androidx.room:room-ktx:$version_room"
-    kapt "androidx.room:room-compiler:$version_room"
-    testImplementation "androidx.room:room-testing:$version_room"
-    // Room Paging 3 Integration (only in 2.4.x)
-    implementation "androidx.room:room-paging:$version_room"
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.room.paging)
+    ksp(libs.room.compiler)
+    testImplementation(libs.room.testing)
 
     // Timber logging
-    implementation "com.jakewharton.timber:timber:$version_timber"
-}
-
-kapt {
-    correctErrorTypes true
+    implementation(libs.timber.logging)
 }

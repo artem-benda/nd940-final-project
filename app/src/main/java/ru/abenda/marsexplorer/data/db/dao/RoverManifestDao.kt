@@ -16,11 +16,11 @@ interface RoverManifestDao {
     suspend fun insertStatsBySol(photosStatsBySol: List<PhotosStatsBySol>)
 
     @Query("SELECT * FROM rovers_manifest WHERE rover_type = :roverType")
-    fun getById(roverType: RoverType): Flow<RoverManifest>
+    fun getById(roverType: RoverType): Flow<RoverManifest?>
 
     @Transaction
     @Query("SELECT * FROM rovers_manifest WHERE rover_type = :roverType")
-    fun getCompositeById(roverType: RoverType): Flow<RoverManifestCompositeModel>
+    fun getCompositeById(roverType: RoverType): Flow<RoverManifestCompositeModel?>
 
     @Query("SELECT * FROM photos_stats_by_sol WHERE rover_type = :roverType ORDER BY sol DESC")
     fun getStatsByRoverType(roverType: RoverType): Flow<List<PhotosStatsBySol>>

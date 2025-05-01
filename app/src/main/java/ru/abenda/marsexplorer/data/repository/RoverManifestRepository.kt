@@ -2,6 +2,7 @@ package ru.abenda.marsexplorer.data.repository
 
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import ru.abenda.marsexplorer.data.api.NasaMarsRoverApi
 import ru.abenda.marsexplorer.data.db.AppDatabase
 import ru.abenda.marsexplorer.data.db.model.PhotosStatsBySol
@@ -11,6 +12,7 @@ import ru.abenda.marsexplorer.data.mapper.computePhotosStatsBySolId
 import ru.abenda.marsexplorer.data.mapper.mapDtoToManifest
 import ru.abenda.marsexplorer.data.mapper.mapDtoToPhotosStatsBySol
 import ru.abenda.marsexplorer.data.mapper.mapDtosToThumbnails
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +24,7 @@ class RoverManifestRepository @Inject constructor(
     suspend fun refreshManifest(roverType: RoverType): Result<Unit> = runCatching {
         val response = api.getMissionManifest(roverType)
         val dto = response.roverManifest
+        Timber.d("refreshManifest, dto = %s", dto)
         db.withTransaction {
             db.roverManifestDao().insert(mapDtoToManifest(dto, roverType))
             db.roverManifestDao().clearStatsBySol()
@@ -35,19 +38,20 @@ class RoverManifestRepository @Inject constructor(
 
     fun getManifestFlow(roverType: RoverType): Flow<RoverManifestCompositeModel> {
         return db.roverManifestDao().getCompositeById(roverType)
+            .filterNotNull()
     }
 
     fun getPhotosStatsBySol(roverType: RoverType): Flow<List<PhotosStatsBySol>> {
         return db.roverManifestDao().getStatsByRoverType(roverType)
     }
 
-    suspend fun refreshThumbnailsIfAbsent(roverType: RoverType, sol: Int) {
+    suspend fun refreshThumbnailsIfAbsent(roverType: RoverType, sol: Int) = runCatching {
         val statsBySolId = computePhotosStatsBySolId(roverType, sol)
         val statsBySol = db.roverManifestDao().findStatsById(statsBySolId)
         val thumbnailsLocal = db.thumbnailsDao().findByStatsBySolId(statsBySolId)
 
-        if (statsBySol?.totalPhotos ?: 0 == 0 || thumbnailsLocal.isNotEmpty())
-            return
+        if (statsBySol?.totalPhotos == 0 || thumbnailsLocal.isNotEmpty())
+            return Result.success(Unit)
 
         val photosResult = api.findPhotosBySol(roverType, sol, 1)
         val thumbnails = mapDtosToThumbnails(photosResult.photos, roverType)

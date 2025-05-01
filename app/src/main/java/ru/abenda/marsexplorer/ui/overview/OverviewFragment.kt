@@ -9,15 +9,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.abenda.marsexplorer.R
 import ru.abenda.marsexplorer.data.api.NetworkCallState
 import ru.abenda.marsexplorer.data.enums.RoverType
 import ru.abenda.marsexplorer.databinding.FragmentOverviewBinding
-import timber.log.Timber
-import androidx.recyclerview.widget.DividerItemDecoration
 import ru.abenda.marsexplorer.notifications.createChannel
+import timber.log.Timber
 
 @AndroidEntryPoint
 abstract class OverviewFragment(
@@ -79,6 +79,9 @@ abstract class OverviewFragment(
                             viewModel.launchManifestRefresh(roverType)
                         }
                         snackbar.show()
+                    }
+                    else -> {
+                        // do nothing
                     }
                 }
             }
