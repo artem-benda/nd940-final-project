@@ -24,7 +24,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"hAOq3n74BaKmh8m7BDB6qvfeuIUx6Rk9zsRdzVDE\"")
+        buildConfigField("String", "API_KEY", "\"DEMO_KEY\"")
         buildConfigField("String", "BASE_URL", "\"https://api.nasa.gov/mars-photos/api/v1/\"")
 
         multiDexEnabled = true
